@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 // HK_Ariel_WarGames.cpp : Defines the entry point for the console application
 /*
 OBJECTIVE
@@ -29,6 +22,9 @@ Your code should be well formatted and with lots of comments explaining your cod
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+
+
+
 using namespace std;
 
 int main()
@@ -57,15 +53,12 @@ int main()
 	bool isenemylocated_Random = false;
 	int pingnumber_Random = 0;
 	
-	
-	
 	// Seed random number generator
 	srand(static_cast<unsigned int> (time(0)));
 
 	// Makes a defualt enemy Location on an 8x8 grid
 	int enemyLocation = rand() % gridMax + gridMin;
 
-	
 	// Human Player Here
 	while (isenemylocated_Human == false)
 	{
@@ -77,6 +70,7 @@ int main()
 		// Increments the pingnumber_Human variable by 1 every time the while loop runs
 		pingnumber_Human++;
 
+		// Continues Loop
 		if (targetGuess_Human != enemyLocation)
 		{
 			cout << "Attempt " << pingnumber_Human << endl;
@@ -84,6 +78,7 @@ int main()
 			cout << "No Hostiles Detected" << endl;
 		}
 
+		// Breaks Loop
 		else if (targetGuess_Human = enemyLocation)
 		{
 			cout << "Attempt " << pingnumber_Human << endl;
@@ -102,35 +97,49 @@ int main()
 		}
 	}
 
+	// Used to seperate the seach methods in the CMD
+	cout << "=============================================================================================" << endl;
+
 	// AI Random Search
 	while (isenemylocated_Random == false)
 	{
+		// Guesses where the enemy might be
+		int randomAIguess = rand() % gridMax + gridMin;
+		pingnumber_Random++;
 
-
-
-
-
+		// Code that runs if the program does pick the correct coordinate that the enemy is located at
+		// Continues loop
+		if (randomAIguess != enemyLocation) 
+		{
+			cout << "Attempt: " << pingnumber_Random << endl;
+			cout << "Checking Coordinate: " << randomAIguess << endl;
+			cout << "NO ENEMIES DETECTED" << endl;
+		}
+		// Code that runs once that target is found
+		// Breaks loop
+		if (randomAIguess == enemyLocation)
+		{
+			cout << "Attempt: " << pingnumber_Random << endl;
+			cout << "Checking Coordinate: " << randomAIguess << endl;
+			cout << "Target Found at " << randomAIguess << endl;
+			isenemylocated_Random = true;
+		}
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	// Used to seperate the seach methods in the CMD
+	cout << "=============================================================================================" << endl;
+
 	// Linear Search Pattern Code
 	while (isenemylocated_Linear == false)
 	{
-		
+
 		// Keeps the code from only running two times
 		// Increments the targetGuess_Linear variable by 1 every time the while loop runs
 		targetGuess_Linear = ++targetGuess_Linear;
 		// Increments the pingnumber_Linear variable by 1 every time the while loop runs
 		pingnumber_Linear++;
 
-
+		// Continues Loop
 		if (targetGuess_Linear != enemyLocation)
 		{
 			cout << "Attempt " << pingnumber_Linear << endl;
@@ -138,6 +147,7 @@ int main()
 			cout << "No Hostiles Detected" << endl;
 		}
 
+		// Breaks Loop
 		else if (targetGuess_Linear = enemyLocation)
 		{
 			cout << "Attempt " << pingnumber_Linear << endl;
@@ -145,14 +155,61 @@ int main()
 			cout << "Target Found at " << targetGuess_Linear << endl;
 			isenemylocated_Linear = true;
 		}
-
-		else 
+		else
 		{
 			// Breaks loop if something went wrong
 			cout << "Malfunction Detected" << endl;
 			cout << "Please Return to IT for help" << endl;
 			isenemylocated_Linear = true;
+		}
 
+	}
+	
+	// Used to seperate the seach methods in the CMD
+	cout << "=============================================================================================" << endl;
+
+	// AI Binary Pattern Search Code
+	while (isenemylocated_binary == false)
+	{
+		// Code that makes the guess for where the target is
+		// This line also creates the variable for the Binary guess
+		int binaryAIguess = ((gridMax - gridMin) / 2) + gridMin;
+		pingnumber_binary++;
+
+		// Code that runs if the binaryAIguess is higher then the enemylocation
+		// Continues Loop
+		if (binaryAIguess > enemyLocation)
+		{
+			cout << "Attempt " << pingnumber_binary << endl;
+			cout << "Checking Square " << binaryAIguess << endl;
+			cout << "No Hostiles Detected" << endl;
+			// Lowers the highest possible search number
+			gridMax = binaryAIguess - 1;
+			// Displays new search parameters
+			cout << "Highest Search Parameter: " << gridMax << endl;
+			cout << "Lowest Search Parameter: " << gridMin << endl;
+		}
+
+		// Code that runs if the binaryAIguess is lower then the enemylocation
+		// Continues Loop
+		if (binaryAIguess < enemyLocation)
+		{
+			cout << "Attempt " << pingnumber_binary << endl;
+			cout << "Checking Square " << binaryAIguess << endl;
+			cout << "No Hostiles Detected" << endl;
+			// Increases the lowest possible search number
+			gridMin = binaryAIguess + 1;
+			cout << "Highest Search Parameter: " << gridMax << endl;
+			cout << "Lowest Search Parameter: " << gridMin << endl;
+		}
+		// Code that runs if the binaryAIguess is equal to the enemylocation
+		// Breaks Loop
+		if (binaryAIguess = enemyLocation)
+		{
+			cout << "Attempt " << pingnumber_binary << endl;
+			cout << "Checking Square " << binaryAIguess << endl;
+			cout << "Target Found at " << binaryAIguess << endl;
+			isenemylocated_binary = true;
 		}
 	}
 
@@ -162,6 +219,10 @@ int main()
 	cout << "Linear Search Attempts: " << pingnumber_Linear << endl;
 	// Displays the number of times it took for the human search method to find the target
 	cout << "Human Search Attempts: " << pingnumber_Human << endl;
+	// Displays the number of times it took for the random search method to find the target
+	cout << "Random Search Attempts: " << pingnumber_Random << endl;
+	// Displays the number of times it took for the binary search method to find the target
+	cout << "Binary Search Attempts: " << pingnumber_binary << endl;
 	cout << "===========================================================" << endl;
 	
 	
